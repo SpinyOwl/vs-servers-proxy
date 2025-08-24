@@ -1,4 +1,4 @@
-name = "vs-master-proxy"
+name = "vs-servers-proxy"
 main = "src/worker.js"
 compatibility_date = "2025-08-24"
 
