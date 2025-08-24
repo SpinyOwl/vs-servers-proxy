@@ -1,0 +1,8 @@
+name = "vs-master-proxy"
+main = "src/worker.js"
+compatibility_date = "2025-08-24"
+
+
+routes = [
+    { pattern = "api.vs-servers.spinyowl.com", custom_domain = true }
+]
