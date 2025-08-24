@@ -4,5 +4,5 @@ compatibility_date = "2025-08-24"
 
 
 routes = [
-    { pattern = "api.vs-servers.spinyowl.com", custom_domain = true }
+    { pattern = "vs-servers-proxy.spinyowl.com", custom_domain = true }
 ]
