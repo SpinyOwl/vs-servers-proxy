@@ -4,6 +4,9 @@ const CORS = {
     "Access-Control-Allow-Headers": "Content-Type"
 };
 
+const MASTER_BASE = "https://masterserver.vintagestory.at/api/v1/";
+const MOD_BASE = "https://mods.vintagestory.at/api/";
+
 export default {
     async fetch(request, env, ctx) {
         // Handle preflight
@@ -11,7 +14,22 @@ export default {
             return new Response(null, { status: 204, headers: CORS });
         }
 
-        const upstream = "https://masterserver.vintagestory.at/api/v1/servers/list";
+        const url = new URL(request.url);
+        let upstreamBase;
+        let prefixLength;
+
+        if (url.pathname.startsWith("/s/")) {
+            upstreamBase = MASTER_BASE;
+            prefixLength = 3; // "/s/"
+        } else if (url.pathname.startsWith("/m/")) {
+            upstreamBase = MOD_BASE;
+            prefixLength = 3; // "/m/"
+        } else {
+            return new Response("Not found", { status: 404, headers: CORS });
+        }
+
+        const path = url.pathname.slice(prefixLength);
+        const upstream = upstreamBase + path + url.search;
 
         // Use Workers cache (data-center local) for 60s
         // Docs: caches.default API
